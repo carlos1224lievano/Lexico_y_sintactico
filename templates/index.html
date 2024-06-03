@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analizador Léxico y Sintáctico</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="container">
+    <h1>Analizador Léxico y Sintáctico</h1>
+    <textarea id="code-input" placeholder="Ingresa el código aquí..."></textarea>
+    <button onclick="analyzeCode()">Analizar</button>
+    <h2>Resultado Léxico</h2>
+    <pre id="lexical-output"></pre>
+    <h2>Resultado Sintáctico</h2>
+    <pre id="syntax-output"></pre>
+</div>
+<script>
+    function analyzeCode() {
+        const code = document.getElementById('code-input').value;
+        fetch('/analyze', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ code })
+        })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('lexical-output').textContent = data.lexical;
+                document.getElementById('syntax-output').textContent = data.syntax;
+            });
+    }
+</script>
+</body>
+</html>
